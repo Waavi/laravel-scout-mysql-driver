@@ -10,7 +10,7 @@
         {
             "name": "WAAVI",
             "email": "info@waavi.com"
-        },
+        }
     ],
     "minimum-stability": "dev",
     "require": {
