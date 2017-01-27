@@ -2,15 +2,13 @@
 
 namespace DamianTW\MySQLScout\Services;
 
-use Laravel\Scout\Searchable;
-use Illuminate\Console\AppNamespaceDetectorTrait;
-use Illuminate\Support\Facades\DB;
 use DamianTW\MySQLScout\Events;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\DB;
+use Laravel\Scout\Searchable;
 
 class IndexService
 {
-    use AppNamespaceDetectorTrait;
-
     protected $modelService;
 
     public function __construct(ModelService $modelService)
@@ -28,15 +26,15 @@ class IndexService
         $searchableModels = [];
 
         foreach ($directories as $directory) {
-            $files = glob($directory.'/*.php');
+            $files = glob($directory . '/*.php');
 
             foreach ($files as $file) {
-                $class = $this->getAppNamespace().basename($file, '.php');
+                $class = $this->getAppNamespace() . basename($file, '.php');
 
                 $modelInstance = new $class();
 
                 $connectionName = $modelInstance->getConnectionName() !== null ?
-                    $modelInstance->getConnectionName() : config('database.default');
+                $modelInstance->getConnectionName() : config('database.default');
 
                 $isMySQL = config("database.connections.$connectionName.driver") === 'mysql';
 
@@ -64,8 +62,8 @@ class IndexService
 
     protected function createIndex()
     {
-        $indexName = $this->modelService->indexName;
-        $tableName = $this->modelService->tableName;
+        $indexName   = $this->modelService->indexName;
+        $tableName   = $this->modelService->tableName;
         $indexFields = implode(',', $this->modelService->getFullTextIndexFields());
 
         if (empty($indexFields)) {
@@ -84,12 +82,12 @@ class IndexService
         $indexName = $this->modelService->indexName;
 
         return !empty(DB::connection($this->modelService->connectionName)->
-        select("SHOW INDEX FROM $tableName WHERE Key_name = ?", [$indexName]));
+                select("SHOW INDEX FROM $tableName WHERE Key_name = ?", [$indexName]));
     }
 
     protected function indexNeedsUpdate()
     {
-        $currentIndexFields = $this->modelService->getFullTextIndexFields();
+        $currentIndexFields  = $this->modelService->getFullTextIndexFields();
         $expectedIndexFields = $this->getIndexFields();
 
         return $currentIndexFields != $expectedIndexFields;
@@ -101,7 +99,7 @@ class IndexService
         $tableName = $this->modelService->tableName;
 
         $index = DB::connection($this->modelService->connectionName)->
-        select("SHOW INDEX FROM $tableName WHERE Key_name = ?", [$indexName]);
+            select("SHOW INDEX FROM $tableName WHERE Key_name = ?", [$indexName]);
 
         $indexFields = [];
 
@@ -129,5 +127,15 @@ class IndexService
                 ->statement("ALTER TABLE $tableName DROP INDEX $indexName");
             event(new Events\ModelIndexDropped($this->modelService->indexName));
         }
+    }
+
+    /**
+     * Get the application namespace.
+     *
+     * @return string
+     */
+    protected function getAppNamespace()
+    {
+        return Container::getInstance()->getNamespace();
     }
 }
