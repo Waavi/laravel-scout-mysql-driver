@@ -31,7 +31,10 @@ class IndexService
             $files = glob($directory.'/*.php');
 
             foreach ($files as $file) {
-                $class = $this->getAppNamespace().basename($file, '.php');
+                $classes = get_declared_classes();
+                include $file;
+                $diff = array_diff(get_declared_classes(), $classes);
+                $class = reset($diff);
 
                 $modelInstance = new $class();
 
