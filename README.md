@@ -4,6 +4,7 @@ If you are interested in taking over this package please contact me at damian@tr
 Laravel Scout MySQL Driver
 ==========================
 
+This is a for of [damiantw/laravel-scout-mysql-driver](https://github.com/damiantw/laravel-scout-mysql-driver)
 Search Eloquent Models using MySQL `FULLTEXT` Indexes or `WHERE LIKE '%:search%`' statements.  
 
 1. [Installation](#installation)
