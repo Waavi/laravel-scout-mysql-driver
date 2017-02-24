@@ -1,11 +1,11 @@
 {
-    "name": "damiantw/laravel-scout-mysql-driver",
+    "name": "mikemnd/laravel-scout-mysql-driver",
     "description": "MySQL driver for Laravel Scout.",
     "license": "MIT",
     "authors": [
         {
-            "name": "Damian Crisafulli",
-            "email": "damian.crisafulli@troyweb.com"
+            "name": Mihail Ilinov",
+            "email": "mihail@ilinov.eu"
         }
     ],
     "minimum-stability": "dev",
