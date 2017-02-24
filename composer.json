@@ -1,16 +1,12 @@
 {
-    "name": "waavi/laravel-scout-mysql-driver",
+    "name": "mikemnd/laravel-scout-mysql-driver",
     "description": "MySQL driver for Laravel Scout.",
     "license": "MIT",
     "authors": [
         {
-            "name": "Damian Crisafulli",
-            "email": "damian.crisafulli@troyweb.com"
+            "name": "Mihail Ilinov",
+            "email": "mihail@ilinov.eu"
         },
-        {
-            "name": "WAAVI",
-            "email": "info@waavi.com"
-        }
     ],
     "minimum-stability": "dev",
     "require": {
